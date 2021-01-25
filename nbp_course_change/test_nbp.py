@@ -26,6 +26,6 @@ def test_get_json(monkeypatch):
     monkeypatch.setattr(requests, "get", mock_get)
     currency, days = ['usd','gb'], '2016-04-04'
 
-    # app.get_json, which contains requests.get, uses the monkeypatch
+    # nbp_change.calc_statistics, which contains requests.get, uses the monkeypatch
     result = nbp_change.calc_statistics(currency, days)
     assert (result=={'gb': {'change': 1.0039457790900552, 'course': 3.7402, 'full_name': 'dolar amerykański'}, 'usd': {'change': 1.0039457790900552, 'course': 3.7402, 'full_name': 'dolar amerykański'}})
