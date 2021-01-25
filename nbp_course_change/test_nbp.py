@@ -12,7 +12,7 @@ class MockResponse:
     # mock json() method always returns a specific testing dictionary
     @staticmethod
     def json():
-        return {"table":"C","currency":"dolar amerykański","code":"USD","rates":[{"no":"064/C/NBP/2016","effectiveDate":"2016-04-04","bid":3.6929,"ask":3.7675}]}
+        return {"table":"A","currency":"dolar amerykański","code":"USD","rates":[{"no":"014/A/NBP/2021","effectiveDate":"2021-01-22","mid":3.7255},{"no":"015/A/NBP/2021","effectiveDate":"2021-01-25","mid":3.7402}]}
 
 
 def test_get_json(monkeypatch):
@@ -24,8 +24,8 @@ def test_get_json(monkeypatch):
 
     # apply the monkeypatch for requests.get to mock_get
     monkeypatch.setattr(requests, "get", mock_get)
-    currency, days = 'usd', '2016-04-04'
+    currency, days = ['usd','gb'], '2016-04-04'
 
     # app.get_json, which contains requests.get, uses the monkeypatch
     result = nbp_change.calc_statistics(currency, days)
-    assert result["mock_key"] == "mock_response"
+    assert (result=={'gb': {'change': 1.0039457790900552, 'course': 3.7402, 'full_name': 'dolar amerykański'}, 'usd': {'change': 1.0039457790900552, 'course': 3.7402, 'full_name': 'dolar amerykański'}})
